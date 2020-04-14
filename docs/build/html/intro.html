@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction to katdal &mdash; SSItest 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tuning your application" href="tuning.html" />
+    <link rel="prev" title="User guide" href="user.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SSItest
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="user.html">User guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Introduction to katdal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quick-tutorial">Quick Tutorial</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tuning.html">Tuning your application</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SSItest</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="user.html">User guide</a> &raquo;</li>
+        
+      <li>Introduction to katdal</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/intro.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction-to-katdal">
+<h1>Introduction to katdal<a class="headerlink" href="#introduction-to-katdal" title="Permalink to this headline">¶</a></h1>
+<p>Data access library for data sets in the MeerKAT Visibility Format (MVF)</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This module serves as a data access library to interact with the chunk stores
+and HDF5 files produced by the MeerKAT radio telescope and its predecessors
+(KAT-7 and Fringe Finder). It uses memory carefully, allowing data sets to be
+inspected and partially loaded into memory. Data sets may be concatenated and
+split via a flexible selection mechanism. In addition, it provides a script to
+convert these data sets to CASA MeasurementSets.</p>
+</div>
+<div class="section" id="quick-tutorial">
+<h2>Quick Tutorial<a class="headerlink" href="#quick-tutorial" title="Permalink to this headline">¶</a></h2>
+<p>Open any data set through a single function to obtain a data set object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">katdal</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">katdal</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;1234567890.h5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This automatically determines the version and storage location of the data set.
+The versions roughly map to the various instruments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">v1</span> <span class="p">:</span> <span class="n">Fringe</span> <span class="n">Finder</span> <span class="p">(</span><span class="n">HDF5</span> <span class="n">file</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">v2</span> <span class="p">:</span> <span class="n">KAT</span><span class="o">-</span><span class="mi">7</span> <span class="p">(</span><span class="n">HDF5</span> <span class="n">file</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">v3</span> <span class="p">:</span> <span class="n">MeerKAT</span> <span class="p">(</span><span class="n">HDF5</span> <span class="n">file</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">v4</span> <span class="p">:</span> <span class="n">MeerKAT</span> <span class="p">(</span><span class="n">chunk</span> <span class="n">store</span> <span class="n">based</span> <span class="n">on</span> <span class="n">objects</span> <span class="ow">in</span> <span class="n">Ceph</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Multiple data sets (even of different versions) may also be concatenated
+together (as long as they have the same dump rate):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">katdal</span><span class="o">.</span><span class="n">open</span><span class="p">([</span><span class="s1">&#39;1234567890.h5&#39;</span><span class="p">,</span> <span class="s1">&#39;1234567891.h5&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Inspect the contents of the data set by printing the object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>Here is a typical output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">===============================================================================</span>
+<span class="n">Name</span><span class="p">:</span> <span class="mf">1313067732.</span><span class="n">h5</span> <span class="p">(</span><span class="n">version</span> <span class="mf">2.0</span><span class="p">)</span>
+<span class="o">===============================================================================</span>
+<span class="n">Observer</span><span class="p">:</span> <span class="n">someone</span>  <span class="n">Experiment</span> <span class="n">ID</span><span class="p">:</span> <span class="mi">2118</span><span class="n">d346</span><span class="o">-</span><span class="n">c41a</span><span class="o">-</span><span class="mf">11e0</span><span class="o">-</span><span class="n">b2df</span><span class="o">-</span><span class="n">a4badb44fe9f</span>
+<span class="n">Description</span><span class="p">:</span> <span class="s1">&#39;Track on Hyd A,Vir A, 3C 286 and 3C 273&#39;</span>
+<span class="n">Observed</span> <span class="kn">from</span> <span class="mi">2011</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">11</span> <span class="mi">15</span><span class="p">:</span><span class="mi">02</span><span class="p">:</span><span class="mf">14.072</span> <span class="n">SAST</span> <span class="n">to</span> <span class="mi">2011</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">11</span> <span class="mi">15</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">47.810</span> <span class="n">SAST</span>
+<span class="n">Dump</span> <span class="n">rate</span><span class="p">:</span> <span class="mf">1.00025</span> <span class="n">Hz</span>
+<span class="n">Subarrays</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="n">ID</span>  <span class="n">Antennas</span>                            <span class="n">Inputs</span>  <span class="n">Corrprods</span>
+   <span class="mi">0</span>  <span class="n">ant1</span><span class="p">,</span><span class="n">ant2</span><span class="p">,</span><span class="n">ant3</span><span class="p">,</span><span class="n">ant4</span><span class="p">,</span><span class="n">ant5</span><span class="p">,</span><span class="n">ant6</span><span class="p">,</span><span class="n">ant7</span>  <span class="mi">14</span>      <span class="mi">112</span>
+<span class="n">Spectral</span> <span class="n">Windows</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="n">ID</span>  <span class="n">CentreFreq</span><span class="p">(</span><span class="n">MHz</span><span class="p">)</span>  <span class="n">Bandwidth</span><span class="p">(</span><span class="n">MHz</span><span class="p">)</span>  <span class="n">Channels</span>  <span class="n">ChannelWidth</span><span class="p">(</span><span class="n">kHz</span><span class="p">)</span>
+   <span class="mi">0</span>  <span class="mf">1822.000</span>         <span class="mf">400.000</span>          <span class="mi">1024</span>      <span class="mf">390.625</span>
+<span class="o">-------------------------------------------------------------------------------</span>
+<span class="n">Data</span> <span class="n">selected</span> <span class="n">according</span> <span class="n">to</span> <span class="n">the</span> <span class="n">following</span> <span class="n">criteria</span><span class="p">:</span>
+  <span class="n">subarray</span><span class="o">=</span><span class="mi">0</span>
+  <span class="n">ants</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ant1&#39;</span><span class="p">,</span> <span class="s1">&#39;ant2&#39;</span><span class="p">,</span> <span class="s1">&#39;ant3&#39;</span><span class="p">,</span> <span class="s1">&#39;ant4&#39;</span><span class="p">,</span> <span class="s1">&#39;ant5&#39;</span><span class="p">,</span> <span class="s1">&#39;ant6&#39;</span><span class="p">,</span> <span class="s1">&#39;ant7&#39;</span><span class="p">]</span>
+  <span class="n">spw</span><span class="o">=</span><span class="mi">0</span>
+<span class="o">-------------------------------------------------------------------------------</span>
+<span class="n">Shape</span><span class="p">:</span> <span class="p">(</span><span class="mi">1054</span> <span class="n">dumps</span><span class="p">,</span> <span class="mi">1024</span> <span class="n">channels</span><span class="p">,</span> <span class="mi">112</span> <span class="n">correlation</span> <span class="n">products</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">Size</span><span class="p">:</span> <span class="mf">967.049</span> <span class="n">MB</span>
+<span class="n">Antennas</span><span class="p">:</span> <span class="o">*</span><span class="n">ant1</span><span class="p">,</span><span class="n">ant2</span><span class="p">,</span><span class="n">ant3</span><span class="p">,</span><span class="n">ant4</span><span class="p">,</span><span class="n">ant5</span><span class="p">,</span><span class="n">ant6</span><span class="p">,</span><span class="n">ant7</span>  <span class="n">Inputs</span><span class="p">:</span> <span class="mi">14</span>  <span class="n">Autocorr</span><span class="p">:</span> <span class="n">yes</span>  <span class="n">Crosscorr</span><span class="p">:</span> <span class="n">yes</span>
+<span class="n">Channels</span><span class="p">:</span> <span class="mi">1024</span> <span class="p">(</span><span class="n">index</span> <span class="mi">0</span> <span class="o">-</span> <span class="mi">1023</span><span class="p">,</span> <span class="mf">2021.805</span> <span class="n">MHz</span> <span class="o">-</span> <span class="mf">1622.195</span> <span class="n">MHz</span><span class="p">),</span> <span class="n">each</span> <span class="mf">390.625</span> <span class="n">kHz</span> <span class="n">wide</span>
+<span class="n">Targets</span><span class="p">:</span> <span class="mi">4</span> <span class="n">selected</span> <span class="n">out</span> <span class="n">of</span> <span class="mi">4</span> <span class="ow">in</span> <span class="n">catalogue</span>
+  <span class="n">ID</span>  <span class="n">Name</span>    <span class="n">Type</span>      <span class="n">RA</span><span class="p">(</span><span class="n">J2000</span><span class="p">)</span>     <span class="n">DEC</span><span class="p">(</span><span class="n">J2000</span><span class="p">)</span>  <span class="n">Tags</span>  <span class="n">Dumps</span>  <span class="n">ModelFlux</span><span class="p">(</span><span class="n">Jy</span><span class="p">)</span>
+   <span class="mi">0</span>  <span class="n">Hyd</span> <span class="n">A</span>   <span class="n">radec</span>      <span class="mi">9</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mf">05.28</span>  <span class="o">-</span><span class="mi">12</span><span class="p">:</span><span class="mi">05</span><span class="p">:</span><span class="mf">48.9</span>          <span class="mi">333</span>      <span class="mf">33.63</span>
+   <span class="mi">1</span>  <span class="n">Vir</span> <span class="n">A</span>   <span class="n">radec</span>     <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">49.42</span>   <span class="mi">12</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mf">28.0</span>          <span class="mi">251</span>     <span class="mf">166.50</span>
+   <span class="mi">2</span>  <span class="mi">3</span><span class="n">C</span> <span class="mi">286</span>  <span class="n">radec</span>     <span class="mi">13</span><span class="p">:</span><span class="mi">31</span><span class="p">:</span><span class="mf">08.29</span>   <span class="mi">30</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">33.0</span>          <span class="mi">230</span>      <span class="mf">12.97</span>
+   <span class="mi">3</span>  <span class="mi">3</span><span class="n">C</span> <span class="mi">273</span>  <span class="n">radec</span>     <span class="mi">12</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mf">06.70</span>    <span class="mi">2</span><span class="p">:</span><span class="mi">03</span><span class="p">:</span><span class="mf">08.6</span>          <span class="mi">240</span>      <span class="mf">39.96</span>
+<span class="n">Scans</span><span class="p">:</span> <span class="mi">8</span> <span class="n">selected</span> <span class="n">out</span> <span class="n">of</span> <span class="mi">8</span> <span class="n">total</span>       <span class="n">Compscans</span><span class="p">:</span> <span class="mi">1</span> <span class="n">selected</span> <span class="n">out</span> <span class="n">of</span> <span class="mi">1</span> <span class="n">total</span>
+  <span class="n">Date</span>        <span class="n">Timerange</span><span class="p">(</span><span class="n">UTC</span><span class="p">)</span>       <span class="n">ScanState</span>  <span class="n">CompScanLabel</span>  <span class="n">Dumps</span>  <span class="n">Target</span>
+  <span class="mi">11</span><span class="o">-</span><span class="n">Aug</span><span class="o">-</span><span class="mi">2011</span><span class="o">/</span><span class="mi">13</span><span class="p">:</span><span class="mi">02</span><span class="p">:</span><span class="mi">14</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">04</span><span class="p">:</span><span class="mi">26</span>    <span class="mi">0</span><span class="p">:</span><span class="n">slew</span>     <span class="mi">0</span><span class="p">:</span>             <span class="mi">133</span>    <span class="mi">0</span><span class="p">:</span><span class="n">Hyd</span> <span class="n">A</span>
+              <span class="mi">13</span><span class="p">:</span><span class="mi">04</span><span class="p">:</span><span class="mi">27</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">46</span>    <span class="mi">1</span><span class="p">:</span><span class="n">track</span>    <span class="mi">0</span><span class="p">:</span>             <span class="mi">200</span>    <span class="mi">0</span><span class="p">:</span><span class="n">Hyd</span> <span class="n">A</span>
+              <span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">47</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">37</span>    <span class="mi">2</span><span class="p">:</span><span class="n">slew</span>     <span class="mi">0</span><span class="p">:</span>              <span class="mi">51</span>    <span class="mi">1</span><span class="p">:</span><span class="n">Vir</span> <span class="n">A</span>
+              <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">38</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">57</span>    <span class="mi">3</span><span class="p">:</span><span class="n">track</span>    <span class="mi">0</span><span class="p">:</span>             <span class="mi">200</span>    <span class="mi">1</span><span class="p">:</span><span class="n">Vir</span> <span class="n">A</span>
+              <span class="mi">13</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">58</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">27</span>    <span class="mi">4</span><span class="p">:</span><span class="n">slew</span>     <span class="mi">0</span><span class="p">:</span>              <span class="mi">30</span>    <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span> <span class="mi">286</span>
+              <span class="mi">13</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">28</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">47</span>    <span class="mi">5</span><span class="p">:</span><span class="n">track</span>    <span class="mi">0</span><span class="p">:</span>             <span class="mi">200</span>    <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span> <span class="mi">286</span>
+              <span class="mi">13</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">48</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">27</span>    <span class="mi">6</span><span class="p">:</span><span class="n">slew</span>     <span class="mi">0</span><span class="p">:</span>              <span class="mi">40</span>    <span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span> <span class="mi">273</span>
+              <span class="mi">13</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">28</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">47</span>    <span class="mi">7</span><span class="p">:</span><span class="n">track</span>    <span class="mi">0</span><span class="p">:</span>             <span class="mi">200</span>    <span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span> <span class="mi">273</span>
+</pre></div>
+</div>
+<p>The first segment of the printout displays the static information of the data
+set, including observer, dump rate and all the available subarrays and spectral
+windows in the data set. The second segment (between the dashed lines) highlights
+the active selection criteria. The last segment displays dynamic information
+that is influenced by the selection, including the overall visibility array
+shape, antennas, channel frequencies, targets and scan info.</p>
+<p>The data set is built around the concept of a three-dimensional visibility array
+with dimensions of time, frequency and correlation product. This is reflected in
+the <em>shape</em> of the dataset:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<p>which returns (1054, 1024, 112), meaning 1054 dumps by 1024 channels by 112
+correlation products.</p>
+<p>Let’s select a subset of the data set:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">scans</span><span class="o">=</span><span class="s1">&#39;track&#39;</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="mi">300</span><span class="p">),</span> <span class="n">ants</span><span class="o">=</span><span class="s1">&#39;ant4&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>This results in the following printout:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">===============================================================================</span>
+<span class="n">Name</span><span class="p">:</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">schwardt</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="mf">1313067732.</span><span class="n">h5</span> <span class="p">(</span><span class="n">version</span> <span class="mf">2.0</span><span class="p">)</span>
+<span class="o">===============================================================================</span>
+<span class="n">Observer</span><span class="p">:</span> <span class="n">siphelele</span>  <span class="n">Experiment</span> <span class="n">ID</span><span class="p">:</span> <span class="mi">2118</span><span class="n">d346</span><span class="o">-</span><span class="n">c41a</span><span class="o">-</span><span class="mf">11e0</span><span class="o">-</span><span class="n">b2df</span><span class="o">-</span><span class="n">a4badb44fe9f</span>
+<span class="n">Description</span><span class="p">:</span> <span class="s1">&#39;track on Hyd A,Vir A, 3C 286 and 3C 273 for Lud&#39;</span>
+<span class="n">Observed</span> <span class="kn">from</span> <span class="mi">2011</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">11</span> <span class="mi">15</span><span class="p">:</span><span class="mi">02</span><span class="p">:</span><span class="mf">14.072</span> <span class="n">SAST</span> <span class="n">to</span> <span class="mi">2011</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">11</span> <span class="mi">15</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">47.810</span> <span class="n">SAST</span>
+<span class="n">Dump</span> <span class="n">rate</span><span class="p">:</span> <span class="mf">1.00025</span> <span class="n">Hz</span>
+<span class="n">Subarrays</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="n">ID</span>  <span class="n">Antennas</span>                            <span class="n">Inputs</span>  <span class="n">Corrprods</span>
+   <span class="mi">0</span>  <span class="n">ant1</span><span class="p">,</span><span class="n">ant2</span><span class="p">,</span><span class="n">ant3</span><span class="p">,</span><span class="n">ant4</span><span class="p">,</span><span class="n">ant5</span><span class="p">,</span><span class="n">ant6</span><span class="p">,</span><span class="n">ant7</span>  <span class="mi">14</span>      <span class="mi">112</span>
+<span class="n">Spectral</span> <span class="n">Windows</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="n">ID</span>  <span class="n">CentreFreq</span><span class="p">(</span><span class="n">MHz</span><span class="p">)</span>  <span class="n">Bandwidth</span><span class="p">(</span><span class="n">MHz</span><span class="p">)</span>  <span class="n">Channels</span>  <span class="n">ChannelWidth</span><span class="p">(</span><span class="n">kHz</span><span class="p">)</span>
+   <span class="mi">0</span>  <span class="mf">1822.000</span>         <span class="mf">400.000</span>          <span class="mi">1024</span>      <span class="mf">390.625</span>
+<span class="o">-------------------------------------------------------------------------------</span>
+<span class="n">Data</span> <span class="n">selected</span> <span class="n">according</span> <span class="n">to</span> <span class="n">the</span> <span class="n">following</span> <span class="n">criteria</span><span class="p">:</span>
+  <span class="n">channels</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="n">subarray</span><span class="o">=</span><span class="mi">0</span>
+  <span class="n">scans</span><span class="o">=</span><span class="s1">&#39;track&#39;</span>
+  <span class="n">ants</span><span class="o">=</span><span class="s1">&#39;ant4&#39;</span>
+  <span class="n">spw</span><span class="o">=</span><span class="mi">0</span>
+<span class="o">-------------------------------------------------------------------------------</span>
+<span class="n">Shape</span><span class="p">:</span> <span class="p">(</span><span class="mi">800</span> <span class="n">dumps</span><span class="p">,</span> <span class="mi">100</span> <span class="n">channels</span><span class="p">,</span> <span class="mi">4</span> <span class="n">correlation</span> <span class="n">products</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">Size</span><span class="p">:</span> <span class="mf">2.560</span> <span class="n">MB</span>
+<span class="n">Antennas</span><span class="p">:</span> <span class="n">ant4</span>  <span class="n">Inputs</span><span class="p">:</span> <span class="mi">2</span>  <span class="n">Autocorr</span><span class="p">:</span> <span class="n">yes</span>  <span class="n">Crosscorr</span><span class="p">:</span> <span class="n">no</span>
+<span class="n">Channels</span><span class="p">:</span> <span class="mi">100</span> <span class="p">(</span><span class="n">index</span> <span class="mi">200</span> <span class="o">-</span> <span class="mi">299</span><span class="p">,</span> <span class="mf">1943.680</span> <span class="n">MHz</span> <span class="o">-</span> <span class="mf">1905.008</span> <span class="n">MHz</span><span class="p">),</span> <span class="n">each</span> <span class="mf">390.625</span> <span class="n">kHz</span> <span class="n">wide</span>
+<span class="n">Targets</span><span class="p">:</span> <span class="mi">4</span> <span class="n">selected</span> <span class="n">out</span> <span class="n">of</span> <span class="mi">4</span> <span class="ow">in</span> <span class="n">catalogue</span>
+  <span class="n">ID</span>  <span class="n">Name</span>    <span class="n">Type</span>      <span class="n">RA</span><span class="p">(</span><span class="n">J2000</span><span class="p">)</span>     <span class="n">DEC</span><span class="p">(</span><span class="n">J2000</span><span class="p">)</span>  <span class="n">Tags</span>  <span class="n">Dumps</span>  <span class="n">ModelFlux</span><span class="p">(</span><span class="n">Jy</span><span class="p">)</span>
+   <span class="mi">0</span>  <span class="n">Hyd</span> <span class="n">A</span>   <span class="n">radec</span>      <span class="mi">9</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mf">05.28</span>  <span class="o">-</span><span class="mi">12</span><span class="p">:</span><span class="mi">05</span><span class="p">:</span><span class="mf">48.9</span>          <span class="mi">200</span>      <span class="mf">31.83</span>
+   <span class="mi">1</span>  <span class="n">Vir</span> <span class="n">A</span>   <span class="n">radec</span>     <span class="mi">12</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">49.42</span>   <span class="mi">12</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mf">28.0</span>          <span class="mi">200</span>     <span class="mf">159.06</span>
+   <span class="mi">2</span>  <span class="mi">3</span><span class="n">C</span> <span class="mi">286</span>  <span class="n">radec</span>     <span class="mi">13</span><span class="p">:</span><span class="mi">31</span><span class="p">:</span><span class="mf">08.29</span>   <span class="mi">30</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mf">33.0</span>          <span class="mi">200</span>      <span class="mf">12.61</span>
+   <span class="mi">3</span>  <span class="mi">3</span><span class="n">C</span> <span class="mi">273</span>  <span class="n">radec</span>     <span class="mi">12</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mf">06.70</span>    <span class="mi">2</span><span class="p">:</span><span class="mi">03</span><span class="p">:</span><span class="mf">08.6</span>          <span class="mi">200</span>      <span class="mf">39.32</span>
+<span class="n">Scans</span><span class="p">:</span> <span class="mi">4</span> <span class="n">selected</span> <span class="n">out</span> <span class="n">of</span> <span class="mi">8</span> <span class="n">total</span>       <span class="n">Compscans</span><span class="p">:</span> <span class="mi">1</span> <span class="n">selected</span> <span class="n">out</span> <span class="n">of</span> <span class="mi">1</span> <span class="n">total</span>
+  <span class="n">Date</span>        <span class="n">Timerange</span><span class="p">(</span><span class="n">UTC</span><span class="p">)</span>       <span class="n">ScanState</span>  <span class="n">CompScanLabel</span>  <span class="n">Dumps</span>  <span class="n">Target</span>
+  <span class="mi">11</span><span class="o">-</span><span class="n">Aug</span><span class="o">-</span><span class="mi">2011</span><span class="o">/</span><span class="mi">13</span><span class="p">:</span><span class="mi">04</span><span class="p">:</span><span class="mi">27</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">46</span>    <span class="mi">1</span><span class="p">:</span><span class="n">track</span>    <span class="mi">0</span><span class="p">:</span>             <span class="mi">200</span>    <span class="mi">0</span><span class="p">:</span><span class="n">Hyd</span> <span class="n">A</span>
+              <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">38</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">57</span>    <span class="mi">3</span><span class="p">:</span><span class="n">track</span>    <span class="mi">0</span><span class="p">:</span>             <span class="mi">200</span>    <span class="mi">1</span><span class="p">:</span><span class="n">Vir</span> <span class="n">A</span>
+              <span class="mi">13</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">28</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">47</span>    <span class="mi">5</span><span class="p">:</span><span class="n">track</span>    <span class="mi">0</span><span class="p">:</span>             <span class="mi">200</span>    <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span> <span class="mi">286</span>
+              <span class="mi">13</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">28</span> <span class="o">-</span> <span class="mi">13</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">47</span>    <span class="mi">7</span><span class="p">:</span><span class="n">track</span>    <span class="mi">0</span><span class="p">:</span>             <span class="mi">200</span>    <span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="n">C</span> <span class="mi">273</span>
+</pre></div>
+</div>
+<p>Compared to the first printout, the static information has remained the same
+while the dynamic information now reflects the selected subset. There are many
+possible selection criteria, as illustrated below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">timerange</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;2011-08-11 13:10:00&#39;</span><span class="p">,</span> <span class="s1">&#39;2011-08-11 13:15:00&#39;</span><span class="p">),</span> <span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">d</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">spw</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">subarray</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">ants</span><span class="o">=</span><span class="s1">&#39;ant1,ant2&#39;</span><span class="p">,</span> <span class="n">pol</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">scans</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">freqrange</span><span class="o">=</span><span class="p">(</span><span class="mf">1700e6</span><span class="p">,</span> <span class="mf">1800e6</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>See the docstring of <code class="xref py py-meth docutils literal notranslate"><span class="pre">DataSet.select()</span></code> for more detailed information (i.e.
+do <cite>d.select?</cite> in IPython). Take note that only one subarray and one spectral
+window must be selected.</p>
+<p>Once a subset of the data has been selected, you can access the data and
+timestamps on the data set object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vis</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">vis</span><span class="p">[:]</span>
+<span class="n">timestamps</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">timestamps</span><span class="p">[:]</span>
+</pre></div>
+</div>
+<p>Note the <cite>[:]</cite> indexing, as the <em>vis</em> and <em>timestamps</em> properties are special
+<code class="xref py py-class docutils literal notranslate"><span class="pre">LazyIndexer</span></code> objects that only give you the actual data when you use
+indexing, in order not to inadvertently load the entire array into memory.</p>
+<p>For the example dataset and no selection the <em>vis</em> array will have a shape of
+(1054, 1024, 112). The time dimension is labelled by <cite>d.timestamps</cite>, the
+frequency dimension by <cite>d.channel_freqs</cite> and the correlation product dimension
+by <cite>d.corr_products</cite>.</p>
+<p>Another key concept in the data set object is that of <em>sensors</em>. These are named
+time series of arbritrary data that are either loaded from the data set
+(<em>actual</em> sensors) or calculated on the fly (<em>virtual</em> sensors). Both variants
+are accessed through the <em>sensor cache</em> (available as <cite>d.sensor</cite>) and cached
+there after the first access. The data set object also provides convenient
+properties to expose commonly-used sensors, as shown in the plot example below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">az</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">el</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Azimuth (degrees)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Elevation (degrees)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Other useful attributes include <em>ra</em>, <em>dec</em>, <em>lst</em>, <em>mjd</em>, <em>u</em>, <em>v</em>, <em>w</em>,
+<em>target_x</em> and <em>target_y</em>. These are all one-dimensional NumPy arrays that
+dynamically change length depending on the active selection.</p>
+<p>As in katdal’s predecessor (scape) there is a <code class="xref py py-meth docutils literal notranslate"><span class="pre">DataSet.scans()</span></code> generator
+that allows you to step through the scans in the data set. It returns the
+scan index, scan state and target object on each iteration, and updates
+the active selection on the data set to include only the current scan.
+It is also possible to iterate through the compound scans with the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">DataSet.compscans()</span></code> generator, which yields the compound scan index, label
+and first target on each iteration for convenience. These two iterators may also
+be used together to traverse the data set structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">compscan</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">compscans</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">scan</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">scans</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;scan&#39;</span><span class="p">,</span> <span class="s1">&#39;track&#39;</span><span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">dec</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Right ascension (J2000 degrees)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Declination (J2000 degrees)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, all the targets (or fields) in the data set are stored in a catalogue
+available at <cite>d.catalogue</cite>, and the original HDF5 file is still accessible via
+a back door installed at <cite>d.file</cite> in the case of a single-file data set.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tuning.html" class="btn btn-neutral float-right" title="Tuning your application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="user.html" class="btn btn-neutral float-left" title="User guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Lorita
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

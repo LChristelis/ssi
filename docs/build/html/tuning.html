@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tuning your application &mdash; SSItest 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Introduction to katdal" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SSItest
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="user.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction to katdal</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tuning your application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#chunking">Chunking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#joint-loading">Joint loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parallelism">Parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#selection">Selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#network-versus-local-disk">Network versus local disk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#benchmarking">Benchmarking</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SSItest</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="user.html">User guide</a> &raquo;</li>
+        
+      <li>Tuning your application</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tuning.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tuning-your-application">
+<h1>Tuning your application<a class="headerlink" href="#tuning-your-application" title="Permalink to this headline">¶</a></h1>
+<p>It is possible to load data at high bandwidth using katdal: rates over
+2.5 GB/s have been seen when loading from a local disk. However, it
+requires an understanding of the storage layout and choice of an
+appropriate access pattern.</p>
+<p>This chapter is aimed at loading <span class="xref std std-doc">mvf_v4</span> data, as older versions
+typically contain far less data. Some of the advice is generic but some
+of the methods described here will not work on older data sets.</p>
+<div class="section" id="chunking">
+<h2>Chunking<a class="headerlink" href="#chunking" title="Permalink to this headline">¶</a></h2>
+<p>The most important thing to understand is that the data is split into
+chunks, each of which are stored as a file on disk or an object in an S3
+store. Retrieving any element of a chunk causes the entire chunk to be
+retrieved. Thus, aligning accesses to whole chunks will give the best
+performance, as data is not discarded.</p>
+<p>As an illustration, consider an application that has an outer loop over
+the baselines, and loads data for one baseline at a time. Chunks
+typically span all baselines, so each time one baseline is loaded,
+katdal will actually load the entire data set. If the application can
+be redesigned to fetch data for a small time range for all baselines it
+will perform much better.</p>
+<p>When using MVFv4, katdal uses <a class="reference external" href="https://docs.dask.org/">dask</a> to manage the chunking. After
+opening a data set, you can determine the chunking for a particular
+array by examining its <code class="docutils literal notranslate"><span class="pre">dataset</span></code> member:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">dataset</span>
+<span class="go">dask.array&lt;1556179171-sdp, shape=(38, 4096, 40), dtype=complex64, chunksize=(32, 1024, 40)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">chunks</span>
+<span class="go">((32, 6), (1024, 1024, 1024, 1024), (40,))</span>
+</pre></div>
+</div>
+<p>For this data set, it will be optimal to load visibilities in 32 × 1024
+× 40 element pieces.</p>
+<p>Note that the chunking scheme may be different for visibilities, flags
+and weights.</p>
+</div>
+<div class="section" id="joint-loading">
+<h2>Joint loading<a class="headerlink" href="#joint-loading" title="Permalink to this headline">¶</a></h2>
+<p>The values returned by katdal are not the raw values stored in the
+chunks: there is processing involved, such as application of calibration
+solutions and flagging of missing data. Some of this processing is
+common between visibilities, flags and weights. It’s thus more efficient
+to load the visibilities, flags and weights as a single operation rather
+than as three separate operations.</p>
+<p>This can be achieved using <code class="xref py py-meth docutils literal notranslate"><span class="pre">DaskLazyIndexer.get()</span></code>. For example,
+replace</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vis</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">vis</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+<span class="n">flags</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>with</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vis</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">DaskLazyIndexer</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">vis</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">flags</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">weights</span><span class="p">],</span> <span class="n">idx</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parallelism">
+<h2>Parallelism<a class="headerlink" href="#parallelism" title="Permalink to this headline">¶</a></h2>
+<p>Dask uses multiple worker threads. It defaults to one thread per CPU
+core, but for I/O-bound tasks this is often not enough to achieve
+maximum throughput. Refer to the dask <a class="reference external" href="https://docs.dask.org/en/latest/scheduling.html">scheduler</a> documentation for
+details of how to configure the number of workers.</p>
+<p>More workers only helps if there is enough parallel work to be
+performed, which means there need to be at least as many chunks loaded
+at a time as there are workers (and preferably many more). It’s thus
+advisable to load as much data at a time as possible without running out
+of memory.</p>
+</div>
+<div class="section" id="selection">
+<h2>Selection<a class="headerlink" href="#selection" title="Permalink to this headline">¶</a></h2>
+<p>Using <code class="xref py py-meth docutils literal notranslate"><span class="pre">DataSet.select()</span></code> is relatively expensive. For the best
+performance, it should only be used occasionally (for example, to filter
+out unwanted data at the start), with array access notation or
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">DaskLazyIndexer.get()</span></code> used to break up large data sets into
+manageable pieces.</p>
+<p>Dask also performs better with selections that select contiguous data.
+You might be able to get a little more performance by using
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">DataSet.scans()</span></code> (which will yield a series of contiguous
+selections) rather than using <code class="xref py py-meth docutils literal notranslate"><span class="pre">select()</span></code> with
+<code class="docutils literal notranslate"><span class="pre">scans='track'</span></code>.</p>
+</div>
+<div class="section" id="network-versus-local-disk">
+<h2>Network versus local disk<a class="headerlink" href="#network-versus-local-disk" title="Permalink to this headline">¶</a></h2>
+<p>When loading data from the network, latency is typically higher, and so
+more workers will be needed to achieve peak throughput. Network access
+is also more sensitive to access patterns that are mis-aligned with
+chunks, because chunks are not cached in memory by the operation system
+and hence must be re-fetched over the network if they are accessed
+again.</p>
+</div>
+<div class="section" id="benchmarking">
+<h2>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this headline">¶</a></h2>
+<p>To assist with testing out the effects of changing these tuning
+parameters, the katdal source code includes a script called
+<code class="docutils literal notranslate"><span class="pre">mvf_read_benchmark.py</span></code> that allows a data set to be loaded in
+various ways and reports the average throughput. The command-line
+options are somewhat limited so you may need to edit it yourself, for
+example, to add a custom selection.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction to katdal" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Lorita
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
