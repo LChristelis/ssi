@@ -1,0 +1,3 @@
+[submodule "docs/source/Try-Submodules"]
+	path = docs/source/Try-Submodules
+	url = git@github.com:LChristelis/Try-Submodules.git
