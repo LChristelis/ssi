@@ -14,6 +14,7 @@ Welcome to SSI's Documentation
 
    user
    whoweare
+   Try-Submodules/docs/source/index
 
 Indices and tables
 ==================
