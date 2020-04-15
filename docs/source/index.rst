@@ -5,16 +5,18 @@
 
 
 
-Welcome to SSI's Documentation
-==================================
+Welcome to the User Documentation for Meerkat SDP
+=================================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    user
-   whoweare
-   Try-Submodules/docs/source/index
+   katdal/doc/index
+   katpoint/doc/index
+   spead2/doc/index
+
 
 Indices and tables
 ==================
