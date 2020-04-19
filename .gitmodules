@@ -3,10 +3,10 @@
 	url = https://github.com/LChristelis/Try-Submodules.git
 [submodule "docs/source/katdal"]
 	path = docs/source/katdal
-	url = git@github.com:ska-sa/katdal.git
+	url = https://github.com/ska-sa/katdal.git
 [submodule "docs/source/katpoint"]
 	path = docs/source/katpoint
-	url = git@github.com:ska-sa/katpoint.git
+	url = https://github.com/ska-sa/katpoint.git
 [submodule "docs/source/spead2"]
 	path = docs/source/spead2
-	url = git@github.com:ska-sa/spead2.git
+	url = https://github.com/ska-sa/spead2.git
