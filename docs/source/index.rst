@@ -12,10 +12,11 @@ Welcome to the User Documentation for Meerkat SDP
    :maxdepth: 1
    :caption: Contents:
 
-   user
-   katdal/doc/index
-   katpoint/doc/index
-   spead2/doc/index
+   intro
+   softwaremodules
+   lib
+   simulatoremulator
+
 
 
 Indices and tables
